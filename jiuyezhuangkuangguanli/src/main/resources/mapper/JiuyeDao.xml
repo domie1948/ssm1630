@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.JiuyeDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.yonghu_id as yonghuId
+        ,a.jiuye_types as jiuyeTypes
+        ,a.diqu_types as diquTypes
+        ,a.gongsi_name as gongsiName
+        ,a.fuzeren_name as fuzerenName
+        ,a.fuzeren_id_number as fuzerenIdNumber
+        ,a.zhiwei_types as zhiweiTypes
+        ,a.beizhu_content as beizhuContent
+        ,a.create_time as createTime
+    </sql>
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.JiuyeView" >
+        SELECT
+        <include refid="Base_Column_List" />
+
+--         级联表的字段
+        ,yonghu.username as username
+        ,yonghu.password as password
+        ,yonghu.name as name
+        ,yonghu.sex_types as sexTypes
+        ,yonghu.yonghu_photo as yonghuPhoto
+        ,yonghu.chushengriqi as chushengriqi
+        ,yonghu.nation as nation
+        ,yonghu.politics_types as politicsTypes
+        ,yonghu.xuexiao_types as xuexiaoTypes
+        ,yonghu.xueyuan_types as xueyuanTypes
+        ,yonghu.zhuanye_types as zhuanyeTypes
+        ,yonghu.banji as banji
+        ,yonghu.xuehao as xuehao
+        ,yonghu.id_number as idNumber
+        ,yonghu.phone as phone
+        ,yonghu.address as address
+        ,yonghu.youxiang as youxiang
+        ,yonghu.youzhengbianma as youzhengbianma
+        ,yonghu.aihao_content as aihaoContent
+
+        FROM jiuye  a
+        left JOIN yonghu yonghu ON a.yonghu_id = yonghu.id
+
+        <where>
+            <if test="params.yonghuId != null">
+                and a.yonghu_id = #{params.yonghuId}
+            </if>
+            <if test="params.jiuyeTypes != null">
+                and a.jiuye_types = #{params.jiuyeTypes}
+            </if>
+            <if test="params.diquTypes != null">
+                and a.diqu_types = #{params.diquTypes}
+            </if>
+            <if test=" params.gongsiName != '' and params.gongsiName != null and params.gongsiName != 'null' ">
+                and a.gongsi_name like CONCAT('%',#{params.gongsiName},'%')
+            </if>
+            <if test=" params.fuzerenName != '' and params.fuzerenName != null and params.fuzerenName != 'null' ">
+                and a.fuzeren_name like CONCAT('%',#{params.fuzerenName},'%')
+            </if>
+            <if test=" params.fuzerenIdNumber != '' and params.fuzerenIdNumber != null and params.fuzerenIdNumber != 'null' ">
+                and a.fuzeren_id_number like CONCAT('%',#{params.fuzerenIdNumber},'%')
+            </if>
+            <if test="params.zhiweiTypes != null">
+                and a.zhiwei_types = #{params.zhiweiTypes}
+            </if>
+            <if test=" params.beizhuContent != '' and params.beizhuContent != null and params.beizhuContent != 'null' ">
+                and a.beizhu_content like CONCAT('%',#{params.beizhuContent},'%')
+            </if>
+
+            <if test=" params.username != '' and params.username != null and params.username != 'null' ">
+                and yonghu.username like CONCAT('%',#{params.username},'%')
+            </if>
+            <if test=" params.password != '' and params.password != null and params.password != 'null' ">
+                and yonghu.password like CONCAT('%',#{params.password},'%')
+            </if>
+            <if test=" params.name != '' and params.name != null and params.name != 'null' ">
+                and yonghu.name like CONCAT('%',#{params.name},'%')
+            </if>
+            <if test="params.sexTypes != null">
+                and yonghu.sex_types = #{params.sexTypes}
+            </if>
+
+            <if test=" params.chushengriqi != '' and params.chushengriqi != null and params.chushengriqi != 'null' ">
+                and yonghu.chushengriqi like CONCAT('%',#{params.chushengriqi},'%')
+            </if>
+            <if test=" params.nation != '' and params.nation != null and params.nation != 'null' ">
+                and yonghu.nation like CONCAT('%',#{params.nation},'%')
+            </if>
+            <if test="params.politicsTypes != null">
+                and yonghu.politics_types = #{params.politicsTypes}
+            </if>
+
+            <if test="params.xuexiaoTypes != null">
+                and yonghu.xuexiao_types = #{params.xuexiaoTypes}
+            </if>
+
+            <if test="params.xueyuanTypes != null">
+                and yonghu.xueyuan_types = #{params.xueyuanTypes}
+            </if>
+
+            <if test="params.zhuanyeTypes != null">
+                and yonghu.zhuanye_types = #{params.zhuanyeTypes}
+            </if>
+
+            <if test=" params.banji != '' and params.banji != null and params.banji != 'null' ">
+                and yonghu.banji like CONCAT('%',#{params.banji},'%')
+            </if>
+            <if test=" params.xuehao != '' and params.xuehao != null and params.xuehao != 'null' ">
+                and yonghu.xuehao like CONCAT('%',#{params.xuehao},'%')
+            </if>
+            <if test=" params.idNumber != '' and params.idNumber != null and params.idNumber != 'null' ">
+                and yonghu.id_number like CONCAT('%',#{params.idNumber},'%')
+            </if>
+            <if test=" params.phone != '' and params.phone != null and params.phone != 'null' ">
+                and yonghu.phone like CONCAT('%',#{params.phone},'%')
+            </if>
+            <if test=" params.address != '' and params.address != null and params.address != 'null' ">
+                and yonghu.address like CONCAT('%',#{params.address},'%')
+            </if>
+            <if test=" params.youxiang != '' and params.youxiang != null and params.youxiang != 'null' ">
+                and yonghu.youxiang like CONCAT('%',#{params.youxiang},'%')
+            </if>
+            <if test=" params.youzhengbianma != '' and params.youzhengbianma != null and params.youzhengbianma != 'null' ">
+                and yonghu.youzhengbianma like CONCAT('%',#{params.youzhengbianma},'%')
+            </if>
+            <if test=" params.aihaoContent != '' and params.aihaoContent != null and params.aihaoContent != 'null' ">
+                and yonghu.aihao_content like CONCAT('%',#{params.aihaoContent},'%')
+            </if>
+        </where>
+        order by a.id desc
+    </select>
+
+</mapper>

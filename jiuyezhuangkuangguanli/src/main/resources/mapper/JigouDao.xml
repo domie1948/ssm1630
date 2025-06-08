@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.JigouDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.username as username
+        ,a.password as password
+        ,a.jigou_name as jigouName
+        ,a.sex_types as sexTypes
+        ,a.jigou_photo as jigouPhoto
+        ,a.jigou_chushengriqi as jigouChushengriqi
+        ,a.jigou_nation as jigouNation
+        ,a.politics_types as politicsTypes
+        ,a.danwei as danwei
+        ,a.bumen_types as bumenTypes
+        ,a.zhiwei_types as zhiweiTypes
+        ,a.jigou_id_number as jigouIdNumber
+        ,a.jigou_phone as jigouPhone
+        ,a.jigou_address as jigouAddress
+        ,a.jigou_youzhengbianma as jigouYouzhengbianma
+        ,a.jigou_aihao_content as jigouAihaoContent
+        ,a.create_time as createTime
+    </sql>
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.JigouView" >
+        SELECT
+        <include refid="Base_Column_List" />
+
+--         级联表的字段
+
+        FROM jigou  a
+
+        <where>
+            <if test=" params.username != '' and params.username != null and params.username != 'null' ">
+                and a.username like CONCAT('%',#{params.username},'%')
+            </if>
+            <if test=" params.password != '' and params.password != null and params.password != 'null' ">
+                and a.password like CONCAT('%',#{params.password},'%')
+            </if>
+            <if test=" params.jigouName != '' and params.jigouName != null and params.jigouName != 'null' ">
+                and a.jigou_name like CONCAT('%',#{params.jigouName},'%')
+            </if>
+            <if test="params.sexTypes != null">
+                and a.sex_types = #{params.sexTypes}
+            </if>
+            <if test=" params.jigouChushengriqi != '' and params.jigouChushengriqi != null and params.jigouChushengriqi != 'null' ">
+                and a.jigou_chushengriqi like CONCAT('%',#{params.jigouChushengriqi},'%')
+            </if>
+            <if test=" params.jigouNation != '' and params.jigouNation != null and params.jigouNation != 'null' ">
+                and a.jigou_nation like CONCAT('%',#{params.jigouNation},'%')
+            </if>
+            <if test="params.politicsTypes != null">
+                and a.politics_types = #{params.politicsTypes}
+            </if>
+            <if test=" params.danwei != '' and params.danwei != null and params.danwei != 'null' ">
+                and a.danwei like CONCAT('%',#{params.danwei},'%')
+            </if>
+            <if test="params.bumenTypes != null">
+                and a.bumen_types = #{params.bumenTypes}
+            </if>
+            <if test="params.zhiweiTypes != null">
+                and a.zhiwei_types = #{params.zhiweiTypes}
+            </if>
+            <if test=" params.jigouIdNumber != '' and params.jigouIdNumber != null and params.jigouIdNumber != 'null' ">
+                and a.jigou_id_number like CONCAT('%',#{params.jigouIdNumber},'%')
+            </if>
+            <if test=" params.jigouPhone != '' and params.jigouPhone != null and params.jigouPhone != 'null' ">
+                and a.jigou_phone like CONCAT('%',#{params.jigouPhone},'%')
+            </if>
+            <if test=" params.jigouAddress != '' and params.jigouAddress != null and params.jigouAddress != 'null' ">
+                and a.jigou_address like CONCAT('%',#{params.jigouAddress},'%')
+            </if>
+            <if test=" params.jigouYouzhengbianma != '' and params.jigouYouzhengbianma != null and params.jigouYouzhengbianma != 'null' ">
+                and a.jigou_youzhengbianma like CONCAT('%',#{params.jigouYouzhengbianma},'%')
+            </if>
+            <if test=" params.jigouAihaoContent != '' and params.jigouAihaoContent != null and params.jigouAihaoContent != 'null' ">
+                and a.jigou_aihao_content like CONCAT('%',#{params.jigouAihaoContent},'%')
+            </if>
+
+        </where>
+        order by a.id desc
+    </select>
+
+</mapper>
